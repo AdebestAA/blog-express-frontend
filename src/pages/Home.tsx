@@ -6,21 +6,21 @@ export default function Home() {
   const user = useAuthStore((s) => s.user);
 
   return (
-    <div className="min-h-screen bg-[#f0ece9]">
+    <div className="min-h-screen bg-white">
       {/* Hero */}
 
-      <section className="relative overflow-hidden px-4 pt-28 pb-36">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 backdrop-blur border border-white/60 text-xs font-medium text-navy-600 mb-8 neu-card-sm">
+      <section className="px-4 pt-24 pb-24 border-b border-navy-100">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-50 border border-navy-100 text-xs font-semibold text-navy-500 mb-8">
             <span className="pulse-dot" />
             PostgreSQL &middot; Express &middot; Redis
           </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-navy-900 tracking-tight mb-6 leading-[1.08]">
-            Blogging, <span className="text-navy-600">stack-first.</span>
+          <h1 className="text-5xl sm:text-6xl font-extrabold text-navy-900 tracking-tight mb-6 leading-[1.05]">
+            Blogging, <span className="text-brand-500">stack-first.</span>
           </h1>
 
-          <p className="text-xl text-navy-400 max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg text-navy-500 max-w-xl mx-auto mb-10 leading-relaxed">
             A full-stack journal built to master PostgreSQL, Express, and Redis
             — one post at a time.
           </p>
@@ -114,10 +114,10 @@ export default function Home() {
               ),
             },
           ].map((item, i) => (
-            <div key={i} className="neu-card card-lift p-8 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-navy-800 flex items-center justify-center mx-auto mb-5">
+            <div key={i} className="neu-card p-7">
+              <div className="w-11 h-11 rounded-full bg-brand-50 flex items-center justify-center mb-5">
                 <svg
-                  className="w-7 h-7 text-white"
+                  className="w-6 h-6 text-brand-500"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -126,10 +126,10 @@ export default function Home() {
                   {item.icon}
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-navy-800 mb-2">
+              <h3 className="text-lg font-bold text-navy-900 mb-2">
                 {item.label}
               </h3>
-              <p className="text-navy-400 leading-relaxed text-sm">
+              <p className="text-navy-500 leading-relaxed text-sm">
                 {item.desc}
               </p>
             </div>
@@ -138,19 +138,17 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="bg-navy-900 relative overflow-hidden py-20">
-        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-navy-700/30 blur-[100px]" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-navy-700/30 blur-[100px]" />
-        <div className="relative max-w-3xl mx-auto text-center px-4">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+      <section className="border-t border-navy-100 py-24">
+        <div className="max-w-2xl mx-auto text-center px-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-navy-900 mb-4 tracking-tight">
             Built to learn. Open to read.
           </h2>
-          <p className="text-lg text-navy-200 mb-8">
+          <p className="text-lg text-navy-500 mb-8">
             Every route, every query, every cache key — documented by doing.
           </p>
           {!user && (
             <Link to="/auth/register">
-              <Button variant="secondary" size="lg">
+              <Button variant="primary" size="lg">
                 Get Started Free
               </Button>
             </Link>

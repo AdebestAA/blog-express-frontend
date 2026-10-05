@@ -9,10 +9,14 @@ import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import VerifyEmail from "./pages/auth/VerifyEmail";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 import PostsList from "./pages/blog/PostsList";
 import PostDetail from "./pages/blog/PostDetail";
 import CreatePost from "./pages/blog/CreatePost";
+import Profile from "./pages/account/Profile";
 import NotFound from "./pages/NotFound";
+import GoogleCallback from "./pages/auth/GoogleCallback";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.user);
@@ -50,6 +54,8 @@ export default function App() {
           <Route path="/" element={<PublicLayout />} />
 
           {/* Auth routes — guests only */}
+          <Route path="/auth/google/callback" element={<GoogleCallback />} />
+          {/* signin */}
           <Route
             path="/auth/login"
             element={
@@ -74,6 +80,22 @@ export default function App() {
               </GuestRoute>
             }
           />
+          <Route
+            path="/auth/forgot-password"
+            element={
+              <GuestRoute>
+                <ForgotPassword />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/auth/reset-password"
+            element={
+              <GuestRoute>
+                <ResetPassword />
+              </GuestRoute>
+            }
+          />
 
           {/* Blog routes — protected */}
           <Route
@@ -86,6 +108,7 @@ export default function App() {
             <Route path="/blog" element={<PostsList />} />
             <Route path="/blog/create" element={<CreatePost />} />
             <Route path="/blog/:id" element={<PostDetail />} />
+            <Route path="/account" element={<Profile />} />
           </Route>
 
           {/* 404 */}
@@ -97,7 +120,7 @@ export default function App() {
           toastOptions={{
             duration: 3000,
             style: {
-              background: "#1a0a08",
+              background: "#0f172a",
               color: "#fff",
               borderRadius: "12px",
               padding: "12px 16px",

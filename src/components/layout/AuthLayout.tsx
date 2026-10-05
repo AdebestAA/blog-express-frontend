@@ -5,9 +5,9 @@ interface AuthLayoutProps {
   children: ReactNode;
   title: string;
   subtitle?: string;
-  footerText: string;
-  footerLink: string;
-  footerLinkText: string;
+  footerText?: string;
+  footerLink?: string;
+  footerLinkText?: string;
 }
 
 export default function AuthLayout({
@@ -19,17 +19,12 @@ export default function AuthLayout({
   footerLinkText,
 }: AuthLayoutProps) {
   return (
-    <div className="min-h-screen flex bg-[#f0ece9]">
+    <div className="min-h-screen flex bg-white">
       {/* Left panel */}
-      <div className="hidden lg:flex lg:w-5/12 relative overflow-hidden bg-navy-900">
-        {/* Soft gradient orbs behind glass */}
-        <div className="absolute -top-32 -left-32 w-72 h-72 rounded-full bg-navy-700/40 blur-[80px]" />
-        <div className="absolute top-1/3 right-0 w-80 h-80 rounded-full bg-navy-600/25 blur-[100px]" />
-        <div className="absolute bottom-10 left-1/4 w-64 h-64 rounded-full bg-navy-500/10 blur-[80px]" />
-
+      <div className="hidden lg:flex lg:w-5/12 relative overflow-hidden bg-brand-500">
         <div className="relative flex flex-col justify-center px-14 w-full">
           <Link to="/" className="flex items-center gap-2.5 mb-12 group">
-            <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center border border-white/10">
+            <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
               <svg
                 className="w-5 h-5 text-white"
                 fill="none"
@@ -49,22 +44,16 @@ export default function AuthLayout({
             </span>
           </Link>
 
-          <h2 className="text-4xl font-bold text-white leading-tight mb-4">
-            PostgreSQL.
+          <h2 className="text-4xl font-bold text-white leading-tight mb-4 tracking-tight">
+            Write it down.
             <br />
-            Express. Redis.
+            Make it persist.
           </h2>
-          <p className="text-lg text-navy-200 leading-relaxed">
-            A full-stack blog built to master
+          <p className="text-lg text-white/80 leading-relaxed">
+            A full-stack journal built to master
             <br />
             the modern backend stack.
           </p>
-
-          <div className="mt-auto pt-16 flex gap-2">
-            <div className="w-2 h-2 rounded-full bg-white/60" />
-            <div className="w-2 h-2 rounded-full bg-white/30" />
-            <div className="w-2 h-2 rounded-full bg-white/10" />
-          </div>
         </div>
       </div>
 
@@ -72,7 +61,7 @@ export default function AuthLayout({
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
           <Link to="/" className="lg:hidden flex items-center gap-2 mb-10">
-            <div className="w-8 h-8 rounded-lg bg-navy-800 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white"
                 fill="none"
@@ -87,27 +76,29 @@ export default function AuthLayout({
                 />
               </svg>
             </div>
-            <span className="text-lg font-bold text-navy-800">Persist</span>
+            <span className="text-lg font-bold text-navy-900">Persist</span>
           </Link>
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-navy-800 mb-2">{title}</h1>
-            {subtitle && (
-              <p className="text-navy-400">{subtitle}</p>
-            )}
+            <h1 className="text-3xl font-bold text-navy-900 mb-2 tracking-tight">
+              {title}
+            </h1>
+            {subtitle && <p className="text-navy-400">{subtitle}</p>}
           </div>
 
           {children}
 
-          <p className="mt-8 text-center text-sm text-navy-400">
-            {footerText}{" "}
-            <Link
-              to={footerLink}
-              className="font-semibold text-navy-700 hover:text-navy-900 transition-colors"
-            >
-              {footerLinkText}
-            </Link>
-          </p>
+          {footerLink && (
+            <p className="mt-8 text-center text-sm text-navy-400">
+              {footerText}{" "}
+              <Link
+                to={footerLink}
+                className="font-semibold text-brand-600 hover:text-brand-700 transition-colors"
+              >
+                {footerLinkText}
+              </Link>
+            </p>
+          )}
         </div>
       </div>
     </div>

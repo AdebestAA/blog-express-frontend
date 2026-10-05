@@ -47,7 +47,7 @@ export default function VerifyEmail() {
             placeholder="000000"
             value={otp}
             onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-            className="w-full px-6 py-4 rounded-xl bg-white border-2 border-navy-100 text-navy-900 text-center text-3xl font-bold tracking-[0.5em] placeholder:text-navy-300 transition-all duration-200 focus:outline-none focus:border-navy-500 focus:ring-4 focus:ring-navy-500/10 hover:border-navy-200"
+            className="w-full px-6 py-4 rounded-xl bg-white border border-navy-200 text-navy-900 text-center text-3xl font-bold tracking-[0.5em] placeholder:text-navy-300 transition-all duration-200 focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 hover:border-navy-300"
           />
         </div>
 

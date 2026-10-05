@@ -3,23 +3,24 @@ export interface User {
   nickname?: string;
 }
 
-export interface Post {
-  post_id: string;
-  posts_contents: string;
-  post_created_at: string;
-  comment_id: string | null;
-  comment_content: string | null;
-  comment_created_at: string | null;
-  post_creator_id: string;
-  post_creator: string;
+// Flat post shape from GET /api/posts
+export interface PostFromApi {
+  id: string;
+  nickname?: string | null;
+  content: string;
+  created_at?: string;
+  comments_count: string | number;
+  likes_count: string | number;
 }
 
-export interface Comment {
+// Comment shape from GET /api/comments/:postId
+export interface PostComment {
   id: string;
+  user_id: number;
+  post_id: string;
   comment: string;
   created_at: string;
   user_email: string;
-  post_id: string;
 }
 
 export interface ApiResponse<T = unknown> {
@@ -58,15 +59,18 @@ export interface CreateCommentPayload {
   post_id: string;
 }
 
-export interface GroupedPost {
-  id: string;
-  content: string;
-  created_at: string;
-  creator_id: string;
-  creator_email: string;
-  comments: Array<{
-    id: string;
-    comment: string;
-    created_at: string;
-  }>;
+// PATCH /api/accounts — all fields optional
+export interface UpdateProfilePayload {
+  nickname?: string;
+  first_name?: string;
+  last_name?: string;
+}
+
+// GET /api/accounts — fields may be null if never set
+export interface UserProfile {
+  email: string;
+  nickname: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  avatar: string | null;
 }

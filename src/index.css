@@ -1,17 +1,41 @@
 @import "tailwindcss";
 
+/* ============================================================
+   THEME TOKENS  —  edit these to recolor the whole app.
+   Everything below (buttons, cards, inputs, links, dots,
+   scrollbars) reads from these variables.
+
+   • --color-brand-*  → the accent color (links, buttons, dots)
+   • --color-navy-*   → neutral grays (text, borders, surfaces)
+
+   To change the accent, just swap the --color-brand-* values.
+   ============================================================ */
 @theme {
-  --color-navy-50: #faf6f5;
-  --color-navy-100: #f0e6e4;
-  --color-navy-200: #d4c4c1;
-  --color-navy-300: #b09e9a;
-  --color-navy-400: #8c7a76;
-  --color-navy-500: #6b5955;
-  --color-navy-600: #5c3a36;
-  --color-navy-700: #4a2824;
-  --color-navy-800: #2d1512;
-  --color-navy-900: #1a0a08;
-  --color-navy-950: #0d0403;
+  /* ── Neutral grays ── */
+  --color-navy-50: #f7f9f9;
+  --color-navy-100: #eff3f4;
+  --color-navy-200: #e1e8ed;
+  --color-navy-300: #cfd9de;
+  --color-navy-400: #8b98a5;
+  --color-navy-500: #536471;
+  --color-navy-600: #3d4c58;
+  --color-navy-700: #2f3b44;
+  --color-navy-800: #1c2126;
+  --color-navy-900: #0f1419;
+  --color-navy-950: #000000;
+
+  /* ── Accent (deep blue) — change these to recolor ── */
+  --color-brand-50: #e9f2fb;
+  --color-brand-100: #cbe0f6;
+  --color-brand-200: #9bc2ec;
+  --color-brand-300: #66a1e0;
+  --color-brand-400: #3682d4;
+  --color-brand-500: #1670c7; /* primary accent  */
+  --color-brand-600: #135fab; /* accent : hover  */
+  --color-brand-700: #114f8c;
+  --color-brand-800: #0f4172;
+  --color-brand-900: #0d365e;
+  --color-brand-950: #08213c;
 }
 
 @layer base {
@@ -26,132 +50,117 @@
   }
 
   body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f0ece9;
-    color: #1a0a08;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: var(--color-navy-900);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #d4c4c1;
-    border-radius: 3px;
+    background: var(--color-navy-300);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-navy-400);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-brand-500) 20%, transparent);
   }
 }
 
 @layer utilities {
-  /* ── Neumorphic card ── */
+  /* Flat aliases (kept so any stray reference stays clean/flat) */
+  .brand-gradient {
+    background-color: var(--color-brand-500);
+  }
+  .brand-text {
+    color: var(--color-brand-500);
+  }
+  .bg-aurora {
+  }
+
+  /* ── Card: hairline border, no shadow ── */
   .neu-card {
-    background: #f0ece9;
-    border-radius: 1.25rem;
-    box-shadow:
-      8px 8px 16px #d6cfca,
-      -8px -8px 16px #ffffff;
+    background: #ffffff;
+    border-radius: 1rem;
+    border: 1px solid var(--color-navy-100);
   }
-
   .neu-card-sm {
-    background: #f0ece9;
-    border-radius: 1rem;
-    box-shadow:
-      4px 4px 10px #d6cfca,
-      -4px -4px 10px #ffffff;
+    background: #ffffff;
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-navy-100);
   }
 
-  /* Inset / pressed */
+  /* Recessed / muted surface */
   .neu-inset {
-    background: #f0ece9;
-    border-radius: 1rem;
-    box-shadow:
-      inset 4px 4px 8px #d6cfca,
-      inset -4px -4px 8px #ffffff;
+    background: var(--color-navy-50);
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-navy-100);
   }
 
-  /* ── Glassmorphic card ── */
+  /* ── Sticky header ── */
   .glass-card {
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 1.25rem;
-    box-shadow: 0 8px 32px rgba(26, 10, 8, 0.04);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
   }
-
   .glass-card-dark {
-    background: rgba(26, 10, 8, 0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1.25rem;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
-  /* ── Hover lift ── */
+  /* ── Flat hover for interactive cards ── */
   .card-lift {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
   }
   .card-lift:hover {
-    transform: translateY(-3px);
-    box-shadow:
-      10px 10px 20px #d6cfca,
-      -10px -10px 20px #ffffff;
+    background: var(--color-navy-50);
+    border-color: var(--color-navy-200);
   }
 
   /* ── Accent dot ── */
   .pulse-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    background: #dc2626;
-    animation: pulse 2s infinite;
+    background: var(--color-brand-500);
   }
 
-  @keyframes pulse {
-    0%, 100% {
-      box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
-    }
-    50% {
-      box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
-    }
-  }
-
-  /* ── Neumorphic input base ── */
+  /* ── Input ── */
   .neu-input {
-    background: #f0ece9;
-    border: none;
-    border-radius: 0.875rem;
-    box-shadow:
-      inset 3px 3px 6px #d6cfca,
-      inset -3px -3px 6px #ffffff;
-    transition: box-shadow 0.2s;
+    background: #ffffff;
+    border: 1px solid var(--color-navy-300);
+    border-radius: 0.75rem;
+    transition: border-color 0.15s;
   }
   .neu-input:focus {
     outline: none;
-    box-shadow:
-      inset 2px 2px 4px #d6cfca,
-      inset -2px -2px 4px #ffffff,
-      0 0 0 3px rgba(92, 58, 54, 0.12);
+    border-color: var(--color-brand-500);
+  }
+  .neu-input::placeholder {
+    color: var(--color-navy-400);
   }
 
-  /* ── Neumorphic button base ── */
+  /* ── Button base ── */
   .neu-btn {
-    background: #f0ece9;
-    border: none;
-    border-radius: 0.875rem;
-    box-shadow:
-      4px 4px 10px #d6cfca,
-      -4px -4px 10px #ffffff;
-    transition: all 0.15s ease;
+    background: #ffffff;
+    border: 1px solid var(--color-navy-300);
+    border-radius: 9999px;
+    transition: background-color 0.15s;
     cursor: pointer;
   }
-  .neu-btn:active {
-    box-shadow:
-      inset 3px 3px 6px #d6cfca,
-      inset -3px -3px 6px #ffffff;
+  .neu-btn:hover {
+    background: var(--color-navy-50);
   }
   .neu-btn:disabled {
     opacity: 0.5;

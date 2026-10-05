@@ -1,11 +1,12 @@
 import api from "../lib/api";
-import type { Post } from "../types";
+import type { PostFromApi } from "../types";
 
 export const postService = {
   async getAll() {
-    const { data } = await api.get<{ success: boolean; data: Post[] }>(
+    const { data } = await api.get<{ success: boolean; data: PostFromApi[] }>(
       "/posts",
     );
+
     if (!data.success) throw new Error("Failed to fetch posts");
     return data.data;
   },

@@ -19,6 +19,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   clearUser: () => {
+    // Must wipe localStorage too — the store rehydrates `user` from these
+    // keys on load, so leaving them behind signs the user back in.
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userEmail");
     set({ user: null });
   },
 }));

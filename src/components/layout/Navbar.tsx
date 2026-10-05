@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../stores/authStore";
 import { useLogout } from "../../hooks/useAuth";
+import { useProfile } from "../../hooks/useAccount";
 import Button from "../ui/Button";
 
 export default function Navbar() {
@@ -9,13 +10,14 @@ export default function Navbar() {
   const location = useLocation();
   const isAuthPage = location.pathname.startsWith("/auth");
   const isAuthenticated = !!user;
+  const { data: profile } = useProfile(isAuthenticated);
 
   return (
-    <nav className="sticky top-0 z-50 glass-card !rounded-none border-b border-white/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <nav className="sticky top-0 z-50 glass-card !rounded-none border-b border-navy-100">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14">
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl neu-card-sm flex items-center justify-center !p-0 !bg-navy-800 !shadow-none">
+            <div className="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center">
               <svg
                 className="w-5 h-5 text-white"
                 fill="none"
@@ -30,7 +32,7 @@ export default function Navbar() {
                 />
               </svg>
             </div>
-            <span className="text-xl font-bold text-navy-800 tracking-tight">
+            <span className="text-xl font-bold text-navy-900 tracking-tight">
               Persist
             </span>
           </Link>
@@ -41,15 +43,21 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/blog"
-                    className="px-4 py-2 rounded-xl text-sm font-medium text-navy-600 hover:text-navy-800 hover:bg-white/50 transition-colors"
+                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-navy-100 transition-colors"
                   >
                     Blog
                   </Link>
                   <Link
                     to="/blog/create"
-                    className="px-4 py-2 rounded-xl text-sm font-medium text-navy-600 hover:text-navy-800 hover:bg-white/50 transition-colors"
+                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-navy-100 transition-colors"
                   >
                     Write
+                  </Link>
+                  <Link
+                    to="/account"
+                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-navy-100 transition-colors"
+                  >
+                    Profile
                   </Link>
                 </>
               )}
@@ -61,11 +69,26 @@ export default function Navbar() {
               <>
                 {isAuthenticated ? (
                   <div className="flex items-center gap-3">
-                    <span className="hidden sm:block text-sm text-navy-400">
-                      <span className="font-semibold text-navy-600">
-                        {user?.email?.split("@")[0]}
+                    <Link
+                      to="/account"
+                      className="flex items-center gap-2 group"
+                      title="Your profile"
+                    >
+                      {profile?.avatar ? (
+                        <img
+                          src={profile.avatar}
+                          alt="Your avatar"
+                          className="w-8 h-8 rounded-full object-cover border border-navy-200"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs font-bold">
+                          {user?.email?.charAt(0).toUpperCase()}
+                        </div>
+                      )}
+                      <span className="hidden sm:block text-sm font-semibold text-navy-700 group-hover:text-navy-900 transition-colors">
+                        {profile?.nickname || user?.email?.split("@")[0]}
                       </span>
-                    </span>
+                    </Link>
                     <Button
                       variant="ghost"
                       size="sm"

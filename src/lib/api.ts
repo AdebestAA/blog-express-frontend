@@ -1,6 +1,8 @@
 import axios from "axios";
+import { useAuthStore } from "../stores/authStore";
 
-const API_BASE_URL = "http://localhost:8800/api";
+// http://api.adebest.com/
+const API_BASE_URL = "http://localhost:8000/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -8,7 +10,6 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// Attach access token to every request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
   if (token) {
@@ -17,16 +18,23 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// On 401 — try refreshing the token once
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+    const originalRequest = error.config as
+      | (typeof error.config & { _retry?: boolean })
+      | undefined;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Network / timeout errors have no response or config — reject as-is.
+    if (!originalRequest || !error.response) {
+      return Promise.reject(error);
+    }
+
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
+        // bare axios (not `api`) so this call skips the interceptor and can't loop
         const { data } = await axios.post(
           `${API_BASE_URL}/auth/refresh`,
           {},
@@ -34,14 +42,20 @@ api.interceptors.response.use(
         );
 
         const newToken = data?.data?.token;
-        if (newToken) {
-          localStorage.setItem("accessToken", newToken);
-          originalRequest.headers.Authorization = `Bearer ${newToken}`;
-          return api(originalRequest);
+
+        if (!newToken) {
+          throw new Error("refresh returned no token");
         }
+
+        localStorage.setItem("accessToken", newToken);
+        originalRequest.headers = originalRequest.headers ?? {};
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        return api(originalRequest);
       } catch {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("userEmail");
+        // Refresh failed → the session is genuinely dead. Clear the store
+        // (which also wipes localStorage) and send the user back to login.
+        useAuthStore.getState().clearUser();
+
         if (!window.location.pathname.startsWith("/auth")) {
           window.location.href = "/auth/login";
         }

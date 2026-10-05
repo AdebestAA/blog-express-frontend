@@ -16,17 +16,17 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-bold rounded-full transition-colors duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variants: Record<string, string> = {
     primary:
-      "bg-navy-800 text-white hover:bg-navy-700 active:bg-navy-900 shadow-lg shadow-navy-800/20 hover:shadow-navy-800/30",
+      "bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700",
     secondary:
-      "bg-navy-600 text-white hover:bg-navy-700 active:bg-navy-800 shadow-lg shadow-navy-600/15 hover:shadow-navy-600/25",
+      "bg-navy-900 text-white hover:bg-navy-800 active:bg-navy-700",
     outline:
-      "border-2 border-navy-200 text-navy-700 hover:bg-navy-50 hover:border-navy-400 active:bg-navy-100",
+      "bg-transparent border border-navy-300 text-navy-900 hover:bg-navy-50 active:bg-navy-100",
     ghost:
-      "text-navy-600 hover:bg-navy-50 active:bg-navy-100",
+      "text-navy-700 hover:bg-navy-100 active:bg-navy-200",
   };
 
   const sizes: Record<string, string> = {

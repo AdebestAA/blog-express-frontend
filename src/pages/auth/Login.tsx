@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useLogin } from "../../hooks/useAuth";
 import AuthLayout from "../../components/layout/AuthLayout";
@@ -58,6 +58,15 @@ export default function Login() {
             </svg>
           }
         />
+
+        <div className="flex justify-end -mt-1">
+          <Link
+            to="/auth/forgot-password"
+            className="text-sm font-semibold text-brand-600 hover:text-brand-700 transition-colors"
+          >
+            Forgot password?
+          </Link>
+        </div>
 
         <Button type="submit" size="lg" isLoading={login.isPending} className="w-full">
           Sign In

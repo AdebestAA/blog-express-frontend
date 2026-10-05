@@ -8,13 +8,8 @@ export function useLogin() {
   const setUser = useAuthStore((s) => s.setUser);
 
   return useMutation({
-    mutationFn: ({
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    }) => authService.signIn(email, password),
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      authService.signIn(email, password),
     onSuccess: (data) => {
       localStorage.setItem("accessToken", data.token);
       localStorage.setItem("userEmail", data.email);
@@ -60,6 +55,38 @@ export function useVerifyEmail() {
   });
 }
 
+export function useForgotPassword() {
+  return useMutation({
+    mutationFn: (email: string) => authService.forgotPassword(email),
+    onSuccess: () => {
+      toast.success("Reset code sent! Check your email.");
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Failed to send reset code"));
+    },
+  });
+}
+
+export function useResetPassword() {
+  return useMutation({
+    mutationFn: ({
+      email,
+      otp,
+      new_password,
+    }: {
+      email: string;
+      otp: string;
+      new_password: string;
+    }) => authService.resetPassword(email, otp, new_password),
+    onSuccess: () => {
+      toast.success("Password reset! You can now sign in.");
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Failed to reset password"));
+    },
+  });
+}
+
 export function useLogout() {
   const clearUser = useAuthStore((s) => s.clearUser);
 
@@ -67,6 +94,23 @@ export function useLogout() {
     mutationFn: () => authService.logout(),
     onSettled: () => {
       clearUser();
+    },
+  });
+}
+
+export function useGoogleAuth() {
+  const setUser = useAuthStore((s) => s.setUser);
+
+  return useMutation({
+    mutationFn: (code: string) => authService.googleAuth(code),
+    onSuccess: (data) => {
+      localStorage.setItem("accessToken", data.token);
+      localStorage.setItem("userEmail", data.email);
+      setUser({ email: data.email });
+      toast.success("Signed in with Google!");
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Google sign-in failed"));
     },
   });
 }
