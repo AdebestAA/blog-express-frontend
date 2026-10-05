@@ -38,13 +38,10 @@ export default function GoogleCallback() {
       return fail("Invalid state — please try again.");
     }
 
-    console.log(searchParams);
-    alert(code);
-
-    // googleAuth.mutate(code, {
-    //   onSuccess: () => navigate("/blog", { replace: true }),
-    //   onError: () => navigate("/auth/login", { replace: true }),
-    // });
+    googleAuth.mutate(code, {
+      onSuccess: () => navigate("/blog", { replace: true }),
+      onError: () => navigate("/auth/login", { replace: true }),
+    });
   }, []);
 
   return (
