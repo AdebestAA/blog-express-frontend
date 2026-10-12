@@ -5,7 +5,6 @@ import { useRegister } from "../../hooks/useAuth";
 import AuthLayout from "../../components/layout/AuthLayout";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
-import { startGoogleOAuth } from "../../lib/googe-auth";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -15,7 +14,6 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleGoogleSignup = () => startGoogleOAuth();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
@@ -120,7 +118,7 @@ export default function Register() {
         >
           Create Account
         </Button>
-        <Button
+        {/* <Button
           onClick={handleGoogleSignup}
           type="button"
           size="lg"
@@ -128,7 +126,7 @@ export default function Register() {
           className="w-full"
         >
           Sign up with Google
-        </Button>
+        </Button> */}
       </form>
     </AuthLayout>
   );

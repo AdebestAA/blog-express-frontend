@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../stores/authStore";
 import { useLogout } from "../../hooks/useAuth";
 import { useProfile } from "../../hooks/useAccount";
+import { getInitial, getUsernameFromEmail } from "../../helpers";
 import Button from "../ui/Button";
 
 export default function Navbar() {
@@ -13,11 +14,11 @@ export default function Navbar() {
   const { data: profile } = useProfile(isAuthenticated);
 
   return (
-    <nav className="sticky top-0 z-50 glass-card !rounded-none border-b border-navy-100">
+    <nav className="sticky top-0 z-50 glass-card !rounded-none border-b border-white/60">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl brand-gradient flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
               <svg
                 className="w-5 h-5 text-white"
                 fill="none"
@@ -32,8 +33,8 @@ export default function Navbar() {
                 />
               </svg>
             </div>
-            <span className="text-xl font-bold text-navy-900 tracking-tight">
-              Persist
+            <span className="hidden min-[460px]:block text-xl font-bold text-navy-900 tracking-tight">
+              Black Book
             </span>
           </Link>
 
@@ -43,19 +44,19 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/blog"
-                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-navy-100 transition-colors"
+                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-white/80 hover:shadow-sm transition-all"
                   >
-                    Blog
+                    Feeds
                   </Link>
                   <Link
                     to="/blog/create"
-                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-navy-100 transition-colors"
+                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-white/80 hover:shadow-sm transition-all"
                   >
-                    Write
+                    Post
                   </Link>
                   <Link
                     to="/account"
-                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-navy-100 transition-colors"
+                    className="px-4 py-2 rounded-full text-sm font-semibold text-navy-700 hover:bg-white/80 hover:shadow-sm transition-all"
                   >
                     Profile
                   </Link>
@@ -78,15 +79,15 @@ export default function Navbar() {
                         <img
                           src={profile.avatar}
                           alt="Your avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-navy-200"
+                          className="w-8 h-8 rounded-full object-cover ring-2 ring-white shadow-md"
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs font-bold">
-                          {user?.email?.charAt(0).toUpperCase()}
+                        <div className="w-8 h-8 rounded-full brand-gradient flex items-center justify-center text-white text-xs font-bold shadow-md shadow-brand-500/30">
+                          {getInitial(user?.email)}
                         </div>
                       )}
                       <span className="hidden sm:block text-sm font-semibold text-navy-700 group-hover:text-navy-900 transition-colors">
-                        {profile?.nickname || user?.email?.split("@")[0]}
+                        {profile?.nickname || getUsernameFromEmail(user?.email)}
                       </span>
                     </Link>
                     <Button

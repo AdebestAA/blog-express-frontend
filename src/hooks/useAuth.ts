@@ -55,6 +55,18 @@ export function useVerifyEmail() {
   });
 }
 
+export function useResendVerification() {
+  return useMutation({
+    mutationFn: (email: string) => authService.resendVerification(email),
+    onSuccess: () => {
+      toast.success("New code sent! Check your email.");
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Failed to resend code"));
+    },
+  });
+}
+
 export function useForgotPassword() {
   return useMutation({
     mutationFn: (email: string) => authService.forgotPassword(email),

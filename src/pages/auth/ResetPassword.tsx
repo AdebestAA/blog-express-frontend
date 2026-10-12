@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useResetPassword } from "../../hooks/useAuth";
+import { onlyDigits } from "../../helpers";
 import AuthLayout from "../../components/layout/AuthLayout";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
@@ -83,7 +84,7 @@ export default function ResetPassword() {
             maxLength={6}
             placeholder="000000"
             value={otp}
-            onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+            onChange={(e) => setOtp(onlyDigits(e.target.value))}
             className="w-full px-6 py-4 rounded-xl bg-white border border-navy-200 text-navy-900 text-center text-3xl font-bold tracking-[0.5em] placeholder:text-navy-300 transition-all duration-200 focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 hover:border-navy-300"
           />
         </div>

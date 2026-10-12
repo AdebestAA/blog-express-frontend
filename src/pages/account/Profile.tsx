@@ -10,9 +10,13 @@ import {
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import Spinner from "../../components/ui/Spinner";
-
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB — matches backend
-const ALLOWED_TYPES = ["image/jpeg", "image/png"];
+import type { UpdateProfilePayload } from "../../types";
+import {
+  getInitial,
+  getUsernameFromEmail,
+  revokeObjectUrls,
+  validateAvatarFile,
+} from "../../helpers";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -22,22 +26,19 @@ export default function Profile() {
   const updateProfile = useUpdateProfile();
   const updateProfilePic = useUpdateProfilePic();
 
-  // ── Profile details form ──
   const [nickname, setNickname] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  // ── Avatar upload ──
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [fileError, setFileError] = useState("");
 
   const email = profile?.email ?? user?.email ?? "";
-  const initial = email.charAt(0).toUpperCase() || "?";
-  const username = email.split("@")[0] || "there";
+  const initial = getInitial(email);
+  const username = getUsernameFromEmail(email);
 
-  // Prefill the form once the profile loads (and after a save refetch)
   useEffect(() => {
     if (profile) {
       setNickname(profile.nickname ?? "");
@@ -46,10 +47,9 @@ export default function Profile() {
     }
   }, [profile]);
 
-  // Revoke the object URL when it changes / on unmount to avoid leaks
   useEffect(() => {
     return () => {
-      if (preview) URL.revokeObjectURL(preview);
+      revokeObjectUrls([preview]);
     };
   }, [preview]);
 
@@ -58,16 +58,13 @@ export default function Profile() {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
-    if (!ALLOWED_TYPES.includes(selected.type)) {
-      setFileError("Only JPEG or PNG images are allowed.");
-      return;
-    }
-    if (selected.size > MAX_FILE_SIZE) {
-      setFileError("Image must be smaller than 2MB.");
+    const validationError = validateAvatarFile(selected);
+    if (validationError) {
+      setFileError(validationError);
       return;
     }
 
-    if (preview) URL.revokeObjectURL(preview);
+    revokeObjectUrls([preview]);
     setFile(selected);
     setPreview(URL.createObjectURL(selected));
   };
@@ -80,8 +77,7 @@ export default function Profile() {
     }
     updateProfilePic.mutate(file, {
       onSuccess: () => {
-        // Drop the local preview so the newly-saved avatar (refetched) shows
-        if (preview) URL.revokeObjectURL(preview);
+        revokeObjectUrls([preview]);
         setPreview(null);
         setFile(null);
         if (fileInputRef.current) fileInputRef.current.value = "";
@@ -92,13 +88,7 @@ export default function Profile() {
   const handleDetailsSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // Send only the fields the user actually filled in (all optional on the backend)
-    const payload: {
-      nickname?: string;
-      first_name?: string;
-      last_name?: string;
-    } = {};
-
+    const payload: UpdateProfilePayload = {};
     const nick = nickname.trim();
     const first = firstName.trim();
     const last = lastName.trim();
@@ -170,7 +160,6 @@ export default function Profile() {
           </div>
         )}
 
-        {/* ── Profile picture ── */}
         <form onSubmit={handleAvatarSubmit} className="neu-card p-6 sm:p-8 mb-6">
           <h2 className="text-lg font-bold text-navy-900 mb-5">
             Profile picture
@@ -235,7 +224,6 @@ export default function Profile() {
           </div>
         </form>
 
-        {/* ── Personal details ── */}
         <form onSubmit={handleDetailsSubmit} className="neu-card p-6 sm:p-8">
           <h2 className="text-lg font-bold text-navy-900 mb-5">
             Personal details

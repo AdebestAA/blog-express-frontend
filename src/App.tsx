@@ -50,12 +50,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          {/* Public home */}
           <Route path="/" element={<PublicLayout />} />
 
-          {/* Auth routes — guests only */}
           <Route path="/auth/google/callback" element={<GoogleCallback />} />
-          {/* signin */}
           <Route
             path="/auth/login"
             element={
@@ -97,7 +94,6 @@ export default function App() {
             }
           />
 
-          {/* Blog routes — protected */}
           <Route
             element={
               <ProtectedRoute>
@@ -111,7 +107,6 @@ export default function App() {
             <Route path="/account" element={<Profile />} />
           </Route>
 
-          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
 

@@ -8,6 +8,7 @@ import Spinner from "../../components/ui/Spinner";
 import Button from "../../components/ui/Button";
 import Textarea from "../../components/ui/Textarea";
 import { Heart, MessageSquare } from "lucide-react";
+import { formatDate, getInitial, getUsernameFromEmail } from "../../helpers";
 
 export default function PostDetail() {
   const { id } = useParams<{ id: string }>();
@@ -24,17 +25,6 @@ export default function PostDetail() {
   const [editContent, setEditContent] = useState("");
 
   const post = posts?.find((p) => p.id === id);
-
-  const formatDate = (dateStr?: string) =>
-    dateStr
-      ? new Date(dateStr).toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      : "";
 
   const isOwner =
     !!profile?.nickname &&
@@ -79,7 +69,7 @@ export default function PostDetail() {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <button
           onClick={() => navigate("/blog")}
           className="flex items-center gap-2 text-sm text-navy-500 hover:text-brand-600 mb-8 transition-colors group"
@@ -90,10 +80,9 @@ export default function PostDetail() {
           Back to all posts
         </button>
 
-        {/* Post */}
-        <article className="neu-card p-8 sm:p-10 mb-8">
+        <article className="neu-card p-5 sm:p-10 mb-8">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-lg">
+            <div className="w-12 h-12 rounded-full brand-gradient flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-500/30">
               {(post.nickname?.trim()?.charAt(0) || "?").toUpperCase()}
             </div>
             <div>
@@ -139,7 +128,20 @@ export default function PostDetail() {
               <p className="text-navy-700 leading-relaxed whitespace-pre-wrap text-lg">
                 {post.content}
               </p>
-              <div className="flex items-center gap-6 mt-6 pt-6 border-t border-navy-100">
+              {post.images && post.images.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                  {post.images.map((src) => (
+                    <img
+                      key={src}
+                      src={src}
+                      alt="post image"
+                      loading="lazy"
+                      className="w-full h-64 object-cover rounded-2xl shadow-lg"
+                    />
+                  ))}
+                </div>
+              )}
+              <div className="flex items-center gap-6 mt-6 pt-6 border-t border-white/70">
                 <span className="flex items-center gap-x-2 text-sm text-navy-500">
                   <Heart size={16} /> {post.likes_count}
                   <span className="text-navy-400">likes</span>
@@ -153,8 +155,7 @@ export default function PostDetail() {
           )}
         </article>
 
-        {/* Comments */}
-        <div className="neu-card p-8 sm:p-10">
+        <div className="neu-card p-5 sm:p-10">
           <h3 className="text-xl font-bold text-navy-900 mb-6 flex items-center gap-2">
             <svg className="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
@@ -174,11 +175,11 @@ export default function PostDetail() {
               comments.map((c) => (
                 <div key={c.id} className="neu-inset p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-brand-500 text-white text-[10px] font-bold">
-                      {c.user_email.charAt(0).toUpperCase()}
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full brand-gradient text-white text-[10px] font-bold shadow-sm">
+                      {getInitial(c.user_email)}
                     </span>
                     <span className="text-xs font-semibold text-navy-700">
-                      {c.user_email.split("@")[0]}
+                      {getUsernameFromEmail(c.user_email, c.user_email)}
                     </span>
                     <span className="text-xs text-navy-400">{formatDate(c.created_at)}</span>
                   </div>
@@ -201,7 +202,12 @@ export default function PostDetail() {
                 rows={3}
                 className="flex-1"
               />
-              <Button type="submit" size="md" isLoading={createComment.isPending}>
+              <Button
+                type="submit"
+                size="md"
+                isLoading={createComment.isPending}
+                className="shrink-0"
+              >
                 Post
               </Button>
             </form>

@@ -52,6 +52,18 @@ export const authService = {
     return data;
   },
 
+  async resendVerification(email: string) {
+    const { data } = await api.post<{ success: boolean; message?: string }>(
+      "/auth/resend-verification",
+      { email },
+    );
+
+    if (!data.success) {
+      throw new Error(data.message || "Failed to resend code");
+    }
+    return data;
+  },
+
   async forgotPassword(email: string) {
     const { data } = await api.post<{ success: boolean; message?: string }>(
       "/auth/forgot-password",

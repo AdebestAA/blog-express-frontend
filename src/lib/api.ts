@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useAuthStore } from "../stores/authStore";
 
-// http://api.adebest.com/
 const API_BASE_URL = "http://localhost:8000/api";
 
 const api = axios.create({
@@ -25,7 +24,6 @@ api.interceptors.response.use(
       | (typeof error.config & { _retry?: boolean })
       | undefined;
 
-    // Network / timeout errors have no response or config — reject as-is.
     if (!originalRequest || !error.response) {
       return Promise.reject(error);
     }
@@ -34,7 +32,6 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        // bare axios (not `api`) so this call skips the interceptor and can't loop
         const { data } = await axios.post(
           `${API_BASE_URL}/auth/refresh`,
           {},
@@ -52,8 +49,6 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return api(originalRequest);
       } catch {
-        // Refresh failed → the session is genuinely dead. Clear the store
-        // (which also wipes localStorage) and send the user back to login.
         useAuthStore.getState().clearUser();
 
         if (!window.location.pathname.startsWith("/auth")) {

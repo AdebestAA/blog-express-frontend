@@ -20,7 +20,6 @@ export default function AuthLayout({
 }: AuthLayoutProps) {
   return (
     <div className="min-h-screen flex bg-white">
-      {/* Left panel */}
       <div className="hidden lg:flex lg:w-5/12 relative overflow-hidden bg-brand-500">
         <div className="relative flex flex-col justify-center px-14 w-full">
           <Link to="/" className="flex items-center gap-2.5 mb-12 group">
@@ -40,24 +39,23 @@ export default function AuthLayout({
               </svg>
             </div>
             <span className="text-2xl font-bold text-white tracking-tight">
-              Persist
+              Black Book
             </span>
           </Link>
 
           <h2 className="text-4xl font-bold text-white leading-tight mb-4 tracking-tight">
             Write it down.
             <br />
-            Make it persist.
+            Keep it in your Black Book.
           </h2>
           <p className="text-lg text-white/80 leading-relaxed">
-            A full-stack journal built to master
+            Your thoughts, kept.
             <br />
-            the modern backend stack.
+            Write once, find it forever.
           </p>
         </div>
       </div>
 
-      {/* Right panel */}
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
           <Link to="/" className="lg:hidden flex items-center gap-2 mb-10">
@@ -76,7 +74,7 @@ export default function AuthLayout({
                 />
               </svg>
             </div>
-            <span className="text-lg font-bold text-navy-900">Persist</span>
+            <span className="text-lg font-bold text-navy-900">Black Book</span>
           </Link>
 
           <div className="mb-8">

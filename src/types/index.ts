@@ -3,7 +3,6 @@ export interface User {
   nickname?: string;
 }
 
-// Flat post shape from GET /api/posts
 export interface PostFromApi {
   id: string;
   nickname?: string | null;
@@ -11,9 +10,10 @@ export interface PostFromApi {
   created_at?: string;
   comments_count: string | number;
   likes_count: string | number;
+  liked_by_me?: boolean;
+  images: string[];
 }
 
-// Comment shape from GET /api/comments/:postId
 export interface PostComment {
   id: string;
   user_id: number;
@@ -59,14 +59,12 @@ export interface CreateCommentPayload {
   post_id: string;
 }
 
-// PATCH /api/accounts — all fields optional
 export interface UpdateProfilePayload {
   nickname?: string;
   first_name?: string;
   last_name?: string;
 }
 
-// GET /api/accounts — fields may be null if never set
 export interface UserProfile {
   email: string;
   nickname: string | null;
