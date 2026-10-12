@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { Layers } from "lucide-react";
 import { useAuthStore } from "../../stores/authStore";
 import { useLogout } from "../../hooks/useAuth";
 import { useProfile } from "../../hooks/useAccount";
@@ -19,22 +20,10 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-14">
           <Link to="/" className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-xl brand-gradient flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
-              <svg
-                className="w-5 h-5 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125v-3.75"
-                />
-              </svg>
+              <Layers className="w-5 h-5 text-white" aria-hidden="true" />
             </div>
             <span className="hidden min-[460px]:block text-xl font-bold text-navy-900 tracking-tight">
-              Black Book
+              YarnHam
             </span>
           </Link>
 

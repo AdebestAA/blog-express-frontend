@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { type ReactNode } from "react";
+import { Layers } from "lucide-react";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -24,29 +25,17 @@ export default function AuthLayout({
         <div className="relative flex flex-col justify-center px-14 w-full">
           <Link to="/" className="flex items-center gap-2.5 mb-12 group">
             <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
-              <svg
-                className="w-5 h-5 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125v-3.75"
-                />
-              </svg>
+              <Layers className="w-5 h-5 text-white" aria-hidden="true" />
             </div>
             <span className="text-2xl font-bold text-white tracking-tight">
-              Black Book
+              YarnHam
             </span>
           </Link>
 
           <h2 className="text-4xl font-bold text-white leading-tight mb-4 tracking-tight">
             Write it down.
             <br />
-            Keep it in your Black Book.
+            Keep it in your YarnHam.
           </h2>
           <p className="text-lg text-white/80 leading-relaxed">
             Your thoughts, kept.
@@ -60,21 +49,9 @@ export default function AuthLayout({
         <div className="w-full max-w-md">
           <Link to="/" className="lg:hidden flex items-center gap-2 mb-10">
             <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center">
-              <svg
-                className="w-4 h-4 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125v-3.75"
-                />
-              </svg>
+              <Layers className="w-4 h-4 text-white" aria-hidden="true" />
             </div>
-            <span className="text-lg font-bold text-navy-900">Black Book</span>
+            <span className="text-lg font-bold text-navy-900">YarnHam</span>
           </Link>
 
           <div className="mb-8">

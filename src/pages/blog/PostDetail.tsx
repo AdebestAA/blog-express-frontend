@@ -7,7 +7,7 @@ import { useAuthStore } from "../../stores/authStore";
 import Spinner from "../../components/ui/Spinner";
 import Button from "../../components/ui/Button";
 import Textarea from "../../components/ui/Textarea";
-import { Heart, MessageSquare } from "lucide-react";
+import { ArrowLeft, Heart, MessageCircle, MessageSquare } from "lucide-react";
 import { formatDate, getInitial, getUsernameFromEmail } from "../../helpers";
 
 export default function PostDetail() {
@@ -74,9 +74,10 @@ export default function PostDetail() {
           onClick={() => navigate("/blog")}
           className="flex items-center gap-2 text-sm text-navy-500 hover:text-brand-600 mb-8 transition-colors group"
         >
-          <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-          </svg>
+          <ArrowLeft
+            className="w-4 h-4 group-hover:-translate-x-1 transition-transform"
+            aria-hidden="true"
+          />
           Back to all posts
         </button>
 
@@ -157,9 +158,7 @@ export default function PostDetail() {
 
         <div className="neu-card p-5 sm:p-10">
           <h3 className="text-xl font-bold text-navy-900 mb-6 flex items-center gap-2">
-            <svg className="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
-            </svg>
+            <MessageCircle className="w-5 h-5 text-brand-600" aria-hidden="true" />
             Discussion
             {comments && (
               <span className="text-sm font-normal text-navy-400">({comments.length})</span>

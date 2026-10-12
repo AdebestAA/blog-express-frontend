@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { useCreatePost } from "../../hooks/usePosts";
 import {
   MAX_POST_IMAGES,
@@ -54,9 +55,10 @@ export default function CreatePost() {
           onClick={() => navigate("/blog")}
           className="flex items-center gap-2 text-sm text-navy-500 hover:text-brand-600 mb-8 transition-colors group"
         >
-          <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-          </svg>
+          <ArrowLeft
+            className="w-4 h-4 group-hover:-translate-x-1 transition-transform"
+            aria-hidden="true"
+          />
           Cancel
         </button>
 

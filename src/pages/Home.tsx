@@ -1,27 +1,6 @@
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { useAuthStore } from "../stores/authStore";
-
-const NOISE_URL =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>";
-
-function Arrow() {
-  return (
-    <svg
-      className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2.2}
-      aria-hidden="true"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-      />
-    </svg>
-  );
-}
 
 function MockFeedCard() {
   return (
@@ -72,19 +51,14 @@ export default function Home() {
           className="pointer-events-none absolute right-[6%] bottom-[8%] h-64 w-64 rounded-full bg-navy-400/20 blur-[100px] animate-float"
           style={{ animationDelay: "-3.5s" }}
         />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
-          style={{ backgroundImage: `url("${NOISE_URL}")` }}
-        />
 
         <div className="relative z-10 mx-auto flex min-h-[86vh] max-w-5xl flex-col items-center justify-center px-4 py-28 text-center">
           <h1 className="animate-fade-up flex items-baseline justify-center gap-x-[0.1em] text-[clamp(3.5rem,15vw,9.5rem)] font-black leading-[0.9] tracking-tighter">
             <span className="bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">
-              Black
+              Yarn
             </span>
             <span className="bg-gradient-to-b from-white/90 to-white/30 bg-clip-text font-serif font-normal italic">
-              Book.
+              Ham.
             </span>
             <span
               aria-hidden="true"
@@ -102,7 +76,10 @@ export default function Home() {
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-bold text-navy-950 transition-all hover:bg-navy-100 active:scale-[0.98] sm:w-auto"
               >
                 Read the Blog
-                <Arrow />
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                />
               </Link>
             ) : (
               <>
@@ -111,7 +88,10 @@ export default function Home() {
                   className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-bold text-navy-950 transition-all hover:bg-navy-100 active:scale-[0.98] sm:w-auto"
                 >
                   Start Writing
-                  <Arrow />
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
                 </Link>
                 <Link
                   to="/auth/login"
@@ -161,7 +141,7 @@ export default function Home() {
                   key={i}
                   className="flex items-center gap-10 whitespace-nowrap"
                 >
-                  Black Book
+                  YarnHam
                   <span className="text-white/25">✳</span>
                 </span>
               ))}
